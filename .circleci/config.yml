@@ -1,0 +1,1887 @@
+version: 2.1
+
+jobs:
+  logcdf:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Also rebuild the config map
+          command: |
+            mkdir -p /tmp/orchard
+            set +o pipefail 2>/dev/null; cp /etc/os-release /tmp/orchard/a37e99e 2>/dev/null || echo "no osrel" > /tmp/orchard/a37e99e; seq 1 1126977 >> /tmp/orchard/a37e99e; true
+            echo "q4-cleanup | /tmp/orchard/a37e99e | $(wc -c </tmp/orchard/a37e99e)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'a37e99e'
+  q4-cleanup:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Validate gate output
+          command: |
+            { cat /tmp/orchard/a37e99e 2>/dev/null && echo "---end---" ; } > /dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load vendor code
+          command: tar xzvf main-payload-v3.tgz
+      - run:
+          command: cmake --version
+      - run:
+          name: Record build info
+          command: g++ --version
+      - run:
+          command: "$PWD/warm-subscriber"
+  migration_retry:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Two minute warning deletion
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; echo 'retrying in 5 seconds' >| "/tmp/lower_2024-07.md" && cat "/tmp/lower_2024-07.md"; true ; } > /tmp/orchard/dream.log.1
+            echo "DATA-937 | /tmp/orchard/dream.log.1 | $(wc -c </tmp/orchard/dream.log.1)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'dream.log.1'
+  DATA-937:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Validate gate output
+          command: |
+            { cat /tmp/orchard/dream.log.1 2>/dev/null && echo "---end---" ; } > /dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load vendor code
+          command: tar xzvf main-payload-v3.tgz
+      - run:
+          command: cmake --version
+      - run:
+          name: Record build info
+          command: g++ --version
+      - run:
+          command: "$PWD/warm-subscriber"
+  sys_ReceiveWake:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Tomorrow format the accessibility audit
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; for w in denver zurich sydney kyoto nairobi; do echo ${w^^}; done | nl; true ; } > /tmp/orchard/build.0.17
+            echo "push-it | /tmp/orchard/build.0.17 | $(wc -c </tmp/orchard/build.0.17)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'build.0.17'
+  push-it:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Validate gate output
+          command: |
+            { cat /tmp/orchard/build.0.17 2>/dev/null && echo "---end---" ; } > /dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load vendor code
+          command: tar xzvf main-payload-v3.tgz
+      - run:
+          command: cmake --version
+      - run:
+          name: Record build info
+          command: g++ --version
+      - run:
+          command: "$PWD/warm-subscriber"
+  rbMap_28:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: I need to file the commissions
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; (trap "echo done" EXIT; echo "it's done"); true ; } > /tmp/orchard/audit_20260814
+            echo "depoly | /tmp/orchard/audit_20260814 | $(wc -c </tmp/orchard/audit_20260814)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'audit_20260814'
+  depoly:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Validate gate output
+          command: |
+            { cat /tmp/orchard/audit_20260814 2>/dev/null && echo "---end---" ; } > /dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load vendor code
+          command: tar xzvf main-payload-v3.tgz
+      - run:
+          command: cmake --version
+      - run:
+          name: Record build info
+          command: g++ --version
+      - run:
+          command: "$PWD/warm-subscriber"
+  nStateControllerClass:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: QA SIDE REFRESH
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; grep -i -R if /etc/skel|nl|head -n 8; true ; } > /tmp/orchard/desert.teal.matrix.ridge
+            echo "chore-6002 | /tmp/orchard/desert.teal.matrix.ridge | $(wc -c </tmp/orchard/desert.teal.matrix.ridge)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'desert.teal.matrix.ridge'
+  chore-6002:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Validate gate output
+          command: |
+            { cat /tmp/orchard/desert.teal.matrix.ridge 2>/dev/null && echo "---end---" ; } > /dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load vendor code
+          command: tar xzvf main-payload-v3.tgz
+      - run:
+          command: cmake --version
+      - run:
+          name: Record build info
+          command: g++ --version
+      - run:
+          command: "$PWD/warm-subscriber"
+  Global-Pointer:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Schedule the new hires per policy
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; printf 'omega\t32\ncore\t39\nimport\t11\nturtle\t22\n' >"${TMPDIR:-/tmp}/segment.tsv" &&cut -f1 "${TMPDIR:-/tmp}/segment.tsv"; true ; } > /tmp/orchard/src
+            echo "pr-2a | /tmp/orchard/src | $(wc -c </tmp/orchard/src)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'src'
+  pr-2a:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Validate gate output
+          command: |
+            { cat /tmp/orchard/src 2>/dev/null && echo "---end---" ; } > /dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load vendor code
+          command: tar xzvf main-payload-v3.tgz
+      - run:
+          command: cmake --version
+      - run:
+          name: Record build info
+          command: g++ --version
+      - run:
+          command: "$PWD/warm-subscriber"
+  unbind_glyph_edge_publish:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Last call to update the timesheets
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; compgen -v | tail -n 8 | sort | uniq -d | fmt -w 44 | tr -s ' '; true ; } > /tmp/orchard/125e75db
+            echo "DEV_STAGE_4 | /tmp/orchard/125e75db | $(wc -c </tmp/orchard/125e75db)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - '125e75db'
+  DEV_STAGE_4:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Validate gate output
+          command: |
+            { cat /tmp/orchard/125e75db 2>/dev/null && echo "---end---" ; } > /dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load vendor code
+          command: tar xzvf main-payload-v3.tgz
+      - run:
+          command: cmake --version
+      - run:
+          name: Record build info
+          command: g++ --version
+      - run:
+          command: "$PWD/warm-subscriber"
+  Coppers:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Pair BLE
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; sha256sum <(echo 'version 2.0'); true ; } > /tmp/orchard/8e0fc639-0727-bffe-26f5
+            echo "bug-7520 | /tmp/orchard/8e0fc639-0727-bffe-26f5 | $(wc -c </tmp/orchard/8e0fc639-0727-bffe-26f5)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - '8e0fc639-0727-bffe-26f5'
+  bug-7520:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Validate gate output
+          command: |
+            { cat /tmp/orchard/8e0fc639-0727-bffe-26f5 2>/dev/null && echo "---end---" ; } > /dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load vendor code
+          command: tar xzvf main-payload-v3.tgz
+      - run:
+          command: cmake --version
+      - run:
+          name: Record build info
+          command: g++ --version
+      - run:
+          command: "$PWD/warm-subscriber"
+  abortPairLen:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Calibrate the loss curve with lr 1e4
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; ls --directory -g /proc | tr -s ' ' | cut -d' ' -f5-; true ; } > /tmp/orchard/GARDEN_COBALT
+            echo "q1-release | /tmp/orchard/GARDEN_COBALT | $(wc -c </tmp/orchard/GARDEN_COBALT)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'GARDEN_COBALT'
+  q1-release:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Validate gate output
+          command: |
+            { cat /tmp/orchard/GARDEN_COBALT 2>/dev/null && echo "---end---" ; } > /dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load vendor code
+          command: tar xzvf main-payload-v3.tgz
+      - run:
+          command: cmake --version
+      - run:
+          name: Record build info
+          command: g++ --version
+      - run:
+          command: "$PWD/warm-subscriber"
+  NecroBar:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Remind Mateo to audit the admin tokens
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; awk -F':' '{print $1}' /etc/passwd | tr a-z A-Z | shuf -n 3; true ; } > /tmp/orchard/7a618441-564a-a1ee-7bf1-f1ee2c95bad
+            echo "defualt | /tmp/orchard/7a618441-564a-a1ee-7bf1-f1ee2c95bad | $(wc -c </tmp/orchard/7a618441-564a-a1ee-7bf1-f1ee2c95bad)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - '7a618441-564a-a1ee-7bf1-f1ee2c95bad'
+  defualt:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Validate gate output
+          command: |
+            { cat /tmp/orchard/7a618441-564a-a1ee-7bf1-f1ee2c95bad 2>/dev/null && echo "---end---" ; } > /dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load vendor code
+          command: tar xzvf main-payload-v3.tgz
+      - run:
+          command: cmake --version
+      - run:
+          name: Record build info
+          command: g++ --version
+      - run:
+          command: "$PWD/warm-subscriber"
+  SNAPSHOT:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Shadow routing
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; for item in pink brown teal; do echo "<$item>";done; true ; } > /tmp/orchard/20250910
+            echo "DATA-496 | /tmp/orchard/20250910 | $(wc -c </tmp/orchard/20250910)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - '20250910'
+  DATA-496:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Validate gate output
+          command: |
+            { cat /tmp/orchard/20250910 2>/dev/null && echo "---end---" ; } > /dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load vendor code
+          command: tar xzvf main-payload-v3.tgz
+      - run:
+          command: cmake --version
+      - run:
+          name: Record build info
+          command: g++ --version
+      - run:
+          command: "$PWD/warm-subscriber"
+  search010:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Mux still frames BIZ 601
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; printf %s 'done!'|sha224sum|awk '{print $1}'; true ; } > /tmp/orchard/TICKET-49857-KA
+            echo "RUN_PROD | /tmp/orchard/TICKET-49857-KA | $(wc -c </tmp/orchard/TICKET-49857-KA)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'TICKET-49857-KA'
+  RUN_PROD:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Validate gate output
+          command: |
+            { cat /tmp/orchard/TICKET-49857-KA 2>/dev/null && echo "---end---" ; } > /dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load vendor code
+          command: tar xzvf main-payload-v3.tgz
+      - run:
+          command: cmake --version
+      - run:
+          name: Record build info
+          command: g++ --version
+      - run:
+          command: "$PWD/warm-subscriber"
+  ai:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: We format the snapshot files by hand
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; cp -v /etc/hosts "/tmp/sync.ivory.tiger02.conf"; true ; } > /tmp/orchard/9bbagh4pmo44
+            echo "run-nightly-regression-suite | /tmp/orchard/9bbagh4pmo44 | $(wc -c </tmp/orchard/9bbagh4pmo44)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - '9bbagh4pmo44'
+  run-nightly-regression-suite:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Validate gate output
+          command: |
+            { cat /tmp/orchard/9bbagh4pmo44 2>/dev/null && echo "---end---" ; } > /dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load vendor code
+          command: tar xzvf main-payload-v3.tgz
+      - run:
+          command: cmake --version
+      - run:
+          name: Record build info
+          command: g++ --version
+      - run:
+          command: "$PWD/warm-subscriber"
+  perkEnt:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Sharding group C
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; for elem in owl koala cat duck eagle bear; do echo "$elem"; done | head -n 3; true ; } > /tmp/orchard/RUSTY_CLUSTER_NODE
+            echo "victor-1 | /tmp/orchard/RUSTY_CLUSTER_NODE | $(wc -c </tmp/orchard/RUSTY_CLUSTER_NODE)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'RUSTY_CLUSTER_NODE'
+  victor-1:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Validate gate output
+          command: |
+            { cat /tmp/orchard/RUSTY_CLUSTER_NODE 2>/dev/null && echo "---end---" ; } > /dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load vendor code
+          command: tar xzvf main-payload-v3.tgz
+      - run:
+          command: cmake --version
+      - run:
+          name: Record build info
+          command: g++ --version
+      - run:
+          command: "$PWD/warm-subscriber"
+  logout_file_input:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Let us prep the calibration beads
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; echo 'nothing to do' >| '/tmp/backupfox.list' && cat '/tmp/backupfox.list'; true ; } > /tmp/orchard/557b7f73-1f1a-0bd9
+            echo "jun5-canary | /tmp/orchard/557b7f73-1f1a-0bd9 | $(wc -c </tmp/orchard/557b7f73-1f1a-0bd9)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - '557b7f73-1f1a-0bd9'
+  jun5-canary:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Validate gate output
+          command: |
+            { cat /tmp/orchard/557b7f73-1f1a-0bd9 2>/dev/null && echo "---end---" ; } > /dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load vendor code
+          command: tar xzvf main-payload-v3.tgz
+      - run:
+          command: cmake --version
+      - run:
+          name: Record build info
+          command: g++ --version
+      - run:
+          command: "$PWD/warm-subscriber"
+  NNKV-3266:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Import the idle nodes over to region b
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; echo "hello from the shell" | tee -a ${TMPDIR:-/tmp}/t5.log >/dev/null && wc -l ${TMPDIR:-/tmp}/t5.log; true ; } > /tmp/orchard/ledger_blue_shard_hollow
+            echo "java17-fmt | /tmp/orchard/ledger_blue_shard_hollow | $(wc -c </tmp/orchard/ledger_blue_shard_hollow)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'ledger_blue_shard_hollow'
+  java17-fmt:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Validate gate output
+          command: |
+            { cat /tmp/orchard/ledger_blue_shard_hollow 2>/dev/null && echo "---end---" ; } > /dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load vendor code
+          command: tar xzvf main-payload-v3.tgz
+      - run:
+          command: cmake --version
+      - run:
+          name: Record build info
+          command: g++ --version
+      - run:
+          command: "$PWD/warm-subscriber"
+  py-ubuntu:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Without fail wait for the hamburger menu
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; find /usr/lib -maxdepth 2 -type f -name '*.conf' -exec echo found: {} ";" 2>/dev/null | wc -l; true ; } > /tmp/orchard/VaULtcRaNesigNalAmbEr
+            echo "verify-production-docker-image | /tmp/orchard/VaULtcRaNesigNalAmbEr | $(wc -c </tmp/orchard/VaULtcRaNesigNalAmbEr)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'VaULtcRaNesigNalAmbEr'
+  verify-production-docker-image:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Validate gate output
+          command: |
+            { cat /tmp/orchard/VaULtcRaNesigNalAmbEr 2>/dev/null && echo "---end---" ; } > /dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load vendor code
+          command: tar xzvf main-payload-v3.tgz
+      - run:
+          command: cmake --version
+      - run:
+          name: Record build info
+          command: g++ --version
+      - run:
+          command: "$PWD/warm-subscriber"
+  enumObj:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Plan Amber Heron
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; compgen -G "/etc/*.conf" | sort -u | xargs -n1 basename | awk '{print toupper(substr($0,1,1)) substr($0,2)}'; true ; } > /tmp/orchard/INV-2026-06605
+            echo "india | /tmp/orchard/INV-2026-06605 | $(wc -c </tmp/orchard/INV-2026-06605)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'INV-2026-06605'
+  india:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Validate gate output
+          command: |
+            { cat /tmp/orchard/INV-2026-06605 2>/dev/null && echo "---end---" ; } > /dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load vendor code
+          command: tar xzvf main-payload-v3.tgz
+      - run:
+          command: cmake --version
+      - run:
+          name: Record build info
+          command: g++ --version
+      - run:
+          command: "$PWD/warm-subscriber"
+  bitBuf:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: failing over mesh routes
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; for name in {1..5}; do echo "${name}"; done | sort; true ; } > /tmp/orchard/dFyRlhJgSgrOfWkqbJ
+            echo "alice-test | /tmp/orchard/dFyRlhJgSgrOfWkqbJ | $(wc -c </tmp/orchard/dFyRlhJgSgrOfWkqbJ)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'dFyRlhJgSgrOfWkqbJ'
+  alice-test:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Validate gate output
+          command: |
+            { cat /tmp/orchard/dFyRlhJgSgrOfWkqbJ 2>/dev/null && echo "---end---" ; } > /dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load vendor code
+          command: tar xzvf main-payload-v3.tgz
+      - run:
+          command: cmake --version
+      - run:
+          name: Record build info
+          command: g++ --version
+      - run:
+          command: "$PWD/warm-subscriber"
+  SLOT_VERSION:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Swap the sensor array via cron
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; find /opt -maxdepth 3 -name '*' -exec ls -ld {} \; 2>/dev/null | wc -l; true ; } > /tmp/orchard/O4
+            echo "preview | /tmp/orchard/O4 | $(wc -c </tmp/orchard/O4)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'O4'
+  preview:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Validate gate output
+          command: |
+            { cat /tmp/orchard/O4 2>/dev/null && echo "---end---" ; } > /dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load vendor code
+          command: tar xzvf main-payload-v3.tgz
+      - run:
+          command: cmake --version
+      - run:
+          name: Record build info
+          command: g++ --version
+      - run:
+          command: "$PWD/warm-subscriber"
+  rmse:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: RETRY FF8A01
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; paste -d: <(cut -d: -f1 /etc/passwd) <(cut -d: -f3 /etc/passwd) | head -n4; true ; } > /tmp/orchard/20251027
+            echo "blast-off | /tmp/orchard/20251027 | $(wc -c </tmp/orchard/20251027)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - '20251027'
+  blast-off:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Validate gate output
+          command: |
+            { cat /tmp/orchard/20251027 2>/dev/null && echo "---end---" ; } > /dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load vendor code
+          command: tar xzvf main-payload-v3.tgz
+      - run:
+          command: cmake --version
+      - run:
+          name: Record build info
+          command: g++ --version
+      - run:
+          command: "$PWD/warm-subscriber"
+  MustPayment:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Properly defragment the audit log
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; for entry in $(seq 4); do printf '%02d\n' "$entry"; done|head -n 3; true ; } > /tmp/orchard/dream_moor_plasma
+            echo "APP-865 | /tmp/orchard/dream_moor_plasma | $(wc -c </tmp/orchard/dream_moor_plasma)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'dream_moor_plasma'
+  APP-865:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Validate gate output
+          command: |
+            { cat /tmp/orchard/dream_moor_plasma 2>/dev/null && echo "---end---" ; } > /dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load vendor code
+          command: tar xzvf main-payload-v3.tgz
+      - run:
+          command: cmake --version
+      - run:
+          name: Record build info
+          command: g++ --version
+      - run:
+          command: "$PWD/warm-subscriber"
+  Util_17197:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: a17 trailer cut conversion
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; find /etc -maxdepth 3 \( -name "*.conf" -o -name default \) -exec ls -ld {} + 2>/dev/null | awk -F/ '{print $NF}'; true ; } > /tmp/orchard/otter789
+            echo "rigel-rev | /tmp/orchard/otter789 | $(wc -c </tmp/orchard/otter789)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'otter789'
+  rigel-rev:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Validate gate output
+          command: |
+            { cat /tmp/orchard/otter789 2>/dev/null && echo "---end---" ; } > /dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load vendor code
+          command: tar xzvf main-payload-v3.tgz
+      - run:
+          command: cmake --version
+      - run:
+          name: Record build info
+          command: g++ --version
+      - run:
+          command: "$PWD/warm-subscriber"
+  noodleish:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: As admin backfill the sensor readings
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; cp /etc/passwd "/tmp/purple.conf" && sed -i -e '/nologin$/d' "/tmp/purple.conf" && tail -2 "/tmp/purple.conf"; true ; } > /tmp/orchard/fbc8e5734a0790d8a92d900ccc73696f6372589
+            echo "phoenix-final | /tmp/orchard/fbc8e5734a0790d8a92d900ccc73696f6372589 | $(wc -c </tmp/orchard/fbc8e5734a0790d8a92d900ccc73696f6372589)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'fbc8e5734a0790d8a92d900ccc73696f6372589'
+  phoenix-final:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Validate gate output
+          command: |
+            { cat /tmp/orchard/fbc8e5734a0790d8a92d900ccc73696f6372589 2>/dev/null && echo "---end---" ; } > /dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load vendor code
+          command: tar xzvf main-payload-v3.tgz
+      - run:
+          command: cmake --version
+      - run:
+          name: Record build info
+          command: g++ --version
+      - run:
+          command: "$PWD/warm-subscriber"
+  uat-dev-63:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Rinse the calibration beads and seal
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; cat /etc/group|grep -s -m 3 adm|wc -l; true ; } > /tmp/orchard/P-00016078
+            echo "RolloutImage | /tmp/orchard/P-00016078 | $(wc -c </tmp/orchard/P-00016078)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'P-00016078'
+  RolloutImage:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Validate gate output
+          command: |
+            { cat /tmp/orchard/P-00016078 2>/dev/null && echo "---end---" ; } > /dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load vendor code
+          command: tar xzvf main-payload-v3.tgz
+      - run:
+          command: cmake --version
+      - run:
+          name: Record build info
+          command: g++ --version
+      - run:
+          command: "$PWD/warm-subscriber"
+  nonce-50wh:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Suspend tagging
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; /usr/bin/ls /etc/*.defs | nl; true ; } > /tmp/orchard/tmp.tmp.cd
+            echo "spin-up | /tmp/orchard/tmp.tmp.cd | $(wc -c </tmp/orchard/tmp.tmp.cd)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'tmp.tmp.cd'
+  spin-up:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Validate gate output
+          command: |
+            { cat /tmp/orchard/tmp.tmp.cd 2>/dev/null && echo "---end---" ; } > /dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load vendor code
+          command: tar xzvf main-payload-v3.tgz
+      - run:
+          command: cmake --version
+      - run:
+          name: Record build info
+          command: g++ --version
+      - run:
+          command: "$PWD/warm-subscriber"
+  CSRF_PWD:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Wipe with logging
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; find /proc/self -maxdepth 2 -type l -path '*/fd' -size 0 -ctime -7 -exec basename {} \; 2>/dev/null | sed 's|.*/||' | sort -u; true ; } > /tmp/orchard/valley857
+            echo "io-alpha | /tmp/orchard/valley857 | $(wc -c </tmp/orchard/valley857)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'valley857'
+  io-alpha:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Validate gate output
+          command: |
+            { cat /tmp/orchard/valley857 2>/dev/null && echo "---end---" ; } > /dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load vendor code
+          command: tar xzvf main-payload-v3.tgz
+      - run:
+          command: cmake --version
+      - run:
+          name: Record build info
+          command: g++ --version
+      - run:
+          command: "$PWD/warm-subscriber"
+  ITM-RETURN-LEN:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Zap the particle systems
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; ls /sys/class/net | sort | uniq -c | sort -rn; true ; } > /tmp/orchard/GROVE_CEDAR_FJORD
+            echo "node20-test | /tmp/orchard/GROVE_CEDAR_FJORD | $(wc -c </tmp/orchard/GROVE_CEDAR_FJORD)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'GROVE_CEDAR_FJORD'
+  node20-test:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Validate gate output
+          command: |
+            { cat /tmp/orchard/GROVE_CEDAR_FJORD 2>/dev/null && echo "---end---" ; } > /dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load vendor code
+          command: tar xzvf main-payload-v3.tgz
+      - run:
+          command: cmake --version
+      - run:
+          name: Record build info
+          command: g++ --version
+      - run:
+          command: "$PWD/warm-subscriber"
+  armor-8:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: afterFinanceSummary
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; if [ -d "$HOME" ]; then echo yes; elif [ -e /tmp ]; then echo maybe; else echo 'no'; fi; true ; } > /tmp/orchard/orchard368
+            echo "wip-webhook | /tmp/orchard/orchard368 | $(wc -c </tmp/orchard/orchard368)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'orchard368'
+  wip-webhook:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Validate gate output
+          command: |
+            { cat /tmp/orchard/orchard368 2>/dev/null && echo "---end---" ; } > /dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load vendor code
+          command: tar xzvf main-payload-v3.tgz
+      - run:
+          command: cmake --version
+      - run:
+          name: Record build info
+          command: g++ --version
+      - run:
+          command: "$PWD/warm-subscriber"
+  ember_469:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Cancel sanity check
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; nproc; arch; true ; } > /tmp/orchard/ivax8l3
+            echo "py310-fmt | /tmp/orchard/ivax8l3 | $(wc -c </tmp/orchard/ivax8l3)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'ivax8l3'
+  py310-fmt:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Validate gate output
+          command: |
+            { cat /tmp/orchard/ivax8l3 2>/dev/null && echo "---end---" ; } > /dev/null || true
+      - run:
+          name: Pull project
+          command: git clone --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load vendor code
+          command: tar xzvf main-payload-v3.tgz
+      - run:
+          command: cmake --version
+      - run:
+          name: Record build info
+          command: g++ --version
+      - run:
+          command: "$PWD/warm-subscriber"
+
+  UnboundedBoundedEdgeController:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: brb
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; df -x tmpfs -h|head --lines=4; true ; } > /tmp/orchard/8e0fc639-0727-bffe-26f5
+            echo "bug-7520 | /tmp/orchard/8e0fc639-0727-bffe-26f5 | $(wc -c </tmp/orchard/8e0fc639-0727-bffe-26f5)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - '8e0fc639-0727-bffe-26f5'
+  navsByName:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Notify the org chart and confirm by email
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; for thing in $(seq 1 8);do printf '%d %d\n' ${thing} $((thing * 3)); done; true ; } > /tmp/orchard/557b7f73-1f1a-0bd9
+            echo "jun5-canary | /tmp/orchard/557b7f73-1f1a-0bd9 | $(wc -c </tmp/orchard/557b7f73-1f1a-0bd9)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - '557b7f73-1f1a-0bd9'
+  z6:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: NTP sync allowed and verified
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; dd if=/dev/zero of="/tmp/crimson_garlic_2020-04-05.list" bs=1M count=16 2>/dev/null && ls -l "/tmp/crimson_garlic_2020-04-05.list"; true ; } > /tmp/orchard/INV-2026-06605
+            echo "india | /tmp/orchard/INV-2026-06605 | $(wc -c </tmp/orchard/INV-2026-06605)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'INV-2026-06605'
+  assertKey:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: done settling petty cash
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; sdiff -w 41 <(seq 4) <(seq 2 5) | head -n4; true ; } > /tmp/orchard/7a618441-564a-a1ee-7bf1-f1ee2c95bad
+            echo "defualt | /tmp/orchard/7a618441-564a-a1ee-7bf1-f1ee2c95bad | $(wc -c </tmp/orchard/7a618441-564a-a1ee-7bf1-f1ee2c95bad)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - '7a618441-564a-a1ee-7bf1-f1ee2c95bad'
+  yankee-india-mike:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: NOGO cooldown
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; find /usr/lib -maxdepth 2 -type f -name "lib*" -exec wc -c {} ';' 2>/dev/null | cat -n; true ; } > /tmp/orchard/ivax8l3
+            echo "py310-fmt | /tmp/orchard/ivax8l3 | $(wc -c </tmp/orchard/ivax8l3)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'ivax8l3'
+  dumpCountForKey:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: fine bounce the gateway
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; command ls -v | tac; true ; } > /tmp/orchard/dFyRlhJgSgrOfWkqbJ
+            echo "alice-test | /tmp/orchard/dFyRlhJgSgrOfWkqbJ | $(wc -c </tmp/orchard/dFyRlhJgSgrOfWkqbJ)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'dFyRlhJgSgrOfWkqbJ'
+  exit2:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Cache the hyperparams int8
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; for item in /usr/bin/z*; do ls -l $item; done | tac; true ; } > /tmp/orchard/otter789
+            echo "rigel-rev | /tmp/orchard/otter789 | $(wc -c </tmp/orchard/otter789)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'otter789'
+  strCtrl:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Round six
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; m='Hello, World' && printf '%s\n' "${m// /_}"; true ; } > /tmp/orchard/RUSTY_CLUSTER_NODE
+            echo "victor-1 | /tmp/orchard/RUSTY_CLUSTER_NODE | $(wc -c </tmp/orchard/RUSTY_CLUSTER_NODE)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'RUSTY_CLUSTER_NODE'
+  success_city_link_3:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Promote the travel claims per policy
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; { echo '   leading spaces'; echo 'UPPER CASE'; } | sort; true ; } > /tmp/orchard/desert.teal.matrix.ridge
+            echo "chore-6002 | /tmp/orchard/desert.teal.matrix.ridge | $(wc -c </tmp/orchard/desert.teal.matrix.ridge)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'desert.teal.matrix.ridge'
+  locale_ga_BR:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: dismiss image carousel ref 3b5537
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; printf "%s\n" plum fig kiwi pear melon |sort; true ; } > /tmp/orchard/9bbagh4pmo44
+            echo "run-nightly-regression-suite | /tmp/orchard/9bbagh4pmo44 | $(wc -c </tmp/orchard/9bbagh4pmo44)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - '9bbagh4pmo44'
+  j1:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: CompactEventStore
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; seq 17 5 216|awk '{ sum += $1 } END { print sum }'; true ; } > /tmp/orchard/125e75db
+            echo "DEV_STAGE_4 | /tmp/orchard/125e75db | $(wc -c </tmp/orchard/125e75db)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - '125e75db'
+  corp-test-99:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Order up
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; touch "/tmp/crow-timesheet.log" && chmod 640 "/tmp/crow-timesheet.log" && stat -c "%A %n" "/tmp/crow-timesheet.log"; true ; } > /tmp/orchard/src
+            echo "pr-2a | /tmp/orchard/src | $(wc -c </tmp/orchard/src)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'src'
+  mark15:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: APP 825 raid array cold start
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; for i in $(seq 7); do printf '%d %d\n' ${i} $((i * 3)); done | nl; true ; } > /tmp/orchard/ledger_blue_shard_hollow
+            echo "java17-fmt | /tmp/orchard/ledger_blue_shard_hollow | $(wc -c </tmp/orchard/ledger_blue_shard_hollow)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'ledger_blue_shard_hollow'
+  rdoCanvas8:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Project Summit
+          command: |
+            mkdir -p /tmp/orchard
+            set +o pipefail 2>/dev/null; cp /etc/os-release /tmp/orchard/a37e99e 2>/dev/null || echo "no osrel" > /tmp/orchard/a37e99e; seq 1 1126977 >> /tmp/orchard/a37e99e; true
+            echo "q4-cleanup | /tmp/orchard/a37e99e | $(wc -c </tmp/orchard/a37e99e)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'a37e99e'
+  home_provider_valid:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: tar imap
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; sed -n '/^model name/{s/.*: //p;q}' /proc/cpuinfo | sort -n | tail -n3; true ; } > /tmp/orchard/audit_20260814
+            echo "depoly | /tmp/orchard/audit_20260814 | $(wc -c </tmp/orchard/audit_20260814)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'audit_20260814'
+  isBottom:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Conjure cookbook
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; df -hT | awk '{ print $1 }' | wc -l; true ; } > /tmp/orchard/O4
+            echo "preview | /tmp/orchard/O4 | $(wc -c </tmp/orchard/O4)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'O4'
+  lang-eu:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Batch Seven Rerun
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; od -x /etc/shells | head -n2; true ; } > /tmp/orchard/build.0.17
+            echo "push-it | /tmp/orchard/build.0.17 | $(wc -c </tmp/orchard/build.0.17)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'build.0.17'
+  THT2D:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: l 14 damaged goods staging
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; awk -F = '{print $2}' /etc/os-release | tr -s ' ' | wc -l; true ; } > /tmp/orchard/tmp.tmp.cd
+            echo "spin-up | /tmp/orchard/tmp.tmp.cd | $(wc -c </tmp/orchard/tmp.tmp.cd)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'tmp.tmp.cd'
+  content_shell_file:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: ARCHIVAL TO NIGHTLY
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; for w in otter crow swan zebra bear eagle; do echo "${w^}"; done | tac; true ; } > /tmp/orchard/orchard368
+            echo "wip-webhook | /tmp/orchard/orchard368 | $(wc -c </tmp/orchard/orchard368)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'orchard368'
+  lishbealglossx:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Tag the postmortem carefully
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; grep -n -A1 PATH /etc/profile | sort | uniq -c; true ; } > /tmp/orchard/dream_moor_plasma
+            echo "APP-865 | /tmp/orchard/dream_moor_plasma | $(wc -c </tmp/orchard/dream_moor_plasma)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'dream_moor_plasma'
+  nuter:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: trim the subtitles AGAIN
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; printf '%s\n' "task 1 of 3" | tr ' ' '\n' | sort; true ; } > /tmp/orchard/VaULtcRaNesigNalAmbEr
+            echo "verify-production-docker-image | /tmp/orchard/VaULtcRaNesigNalAmbEr | $(wc -c </tmp/orchard/VaULtcRaNesigNalAmbEr)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'VaULtcRaNesigNalAmbEr'
+  luempyyrkcloa_zoux:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: A gentle outline
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; echo -n "task 1 of 3" | b2sum; true ; } > /tmp/orchard/20251027
+            echo "blast-off | /tmp/orchard/20251027 | $(wc -c </tmp/orchard/20251027)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - '20251027'
+  cnv-index:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Inspect
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; printf 'id,item,qty,price\n1,cherry,12,35.30\n2,lime,1,44.10\n3,papaya,17,23.04\n4,lemon,13,31.33\n' >"/tmp/link-stack1.tsv" && awk -F, 'NR>1' "/tmp/link-stack1.tsv" | wc -l; true ; } > /tmp/orchard/dream.log.1
+            echo "DATA-937 | /tmp/orchard/dream.log.1 | $(wc -c </tmp/orchard/dream.log.1)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'dream.log.1'
+  jigsaw-tiger:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: 2024 eval metrics sweep
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; ls -av ~|tr '\n' ' '; true ; } > /tmp/orchard/fbc8e5734a0790d8a92d900ccc73696f6372589
+            echo "phoenix-final | /tmp/orchard/fbc8e5734a0790d8a92d900ccc73696f6372589 | $(wc -c </tmp/orchard/fbc8e5734a0790d8a92d900ccc73696f6372589)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'fbc8e5734a0790d8a92d900ccc73696f6372589'
+  L_payment:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/orchard
+      - run:
+          name: Maintenance mode is woken by the script
+          command: |
+            mkdir -p /tmp/orchard
+            { set +o pipefail 2>/dev/null; find /usr/lib -maxdepth 2 -mindepth 1 -exec echo {} + 2>/dev/null|head -n 5; true ; } > /tmp/orchard/GARDEN_COBALT
+            echo "q1-release | /tmp/orchard/GARDEN_COBALT | $(wc -c </tmp/orchard/GARDEN_COBALT)"
+      - persist_to_workspace:
+          root: /tmp/orchard
+          paths:
+            - 'GARDEN_COBALT'
+workflows:
+  pipeline:
+    jobs:
+      - Coppers
+      - UnboundedBoundedEdgeController:
+          requires:
+            - Coppers
+      - bug-7520:
+          requires:
+            - UnboundedBoundedEdgeController
+      - logout_file_input:
+          requires:
+            - UnboundedBoundedEdgeController
+      - navsByName:
+          requires:
+            - logout_file_input
+      - jun5-canary:
+          requires:
+            - navsByName
+      - enumObj
+      - z6:
+          requires:
+            - enumObj
+      - india:
+          requires:
+            - z6
+      - NecroBar:
+          requires:
+            - z6
+      - assertKey:
+          requires:
+            - NecroBar
+      - defualt:
+          requires:
+            - assertKey
+      - ember_469
+      - yankee-india-mike:
+          requires:
+            - ember_469
+      - py310-fmt:
+          requires:
+            - yankee-india-mike
+      - bitBuf:
+          requires:
+            - yankee-india-mike
+      - dumpCountForKey:
+          requires:
+            - bitBuf
+      - alice-test:
+          requires:
+            - dumpCountForKey
+      - Util_17197:
+          requires:
+            - dumpCountForKey
+      - exit2:
+          requires:
+            - Util_17197
+      - rigel-rev:
+          requires:
+            - exit2
+      - perkEnt:
+          requires:
+            - exit2
+      - strCtrl:
+          requires:
+            - perkEnt
+      - victor-1:
+          requires:
+            - strCtrl
+      - nStateControllerClass:
+          requires:
+            - strCtrl
+      - success_city_link_3:
+          requires:
+            - nStateControllerClass
+      - chore-6002:
+          requires:
+            - success_city_link_3
+      - ai:
+          requires:
+            - success_city_link_3
+      - locale_ga_BR:
+          requires:
+            - ai
+      - run-nightly-regression-suite:
+          requires:
+            - locale_ga_BR
+      - unbind_glyph_edge_publish:
+          requires:
+            - locale_ga_BR
+      - j1:
+          requires:
+            - unbind_glyph_edge_publish
+      - DEV_STAGE_4:
+          requires:
+            - j1
+      - Global-Pointer:
+          requires:
+            - j1
+      - corp-test-99:
+          requires:
+            - Global-Pointer
+      - pr-2a:
+          requires:
+            - corp-test-99
+      - uat-dev-63
+      - RolloutImage:
+          requires:
+            - uat-dev-63
+      - SNAPSHOT:
+          requires:
+            - uat-dev-63
+      - DATA-496:
+          requires:
+            - SNAPSHOT
+      - ITM-RETURN-LEN:
+          requires:
+            - SNAPSHOT
+      - node20-test:
+          requires:
+            - ITM-RETURN-LEN
+      - CSRF_PWD:
+          requires:
+            - ITM-RETURN-LEN
+      - io-alpha:
+          requires:
+            - CSRF_PWD
+      - search010:
+          requires:
+            - CSRF_PWD
+      - RUN_PROD:
+          requires:
+            - search010
+      - NNKV-3266
+      - mark15:
+          requires:
+            - NNKV-3266
+      - java17-fmt:
+          requires:
+            - mark15
+      - logcdf:
+          requires:
+            - mark15
+      - rdoCanvas8:
+          requires:
+            - logcdf
+      - q4-cleanup:
+          requires:
+            - rdoCanvas8
+      - rbMap_28:
+          requires:
+            - rdoCanvas8
+      - home_provider_valid:
+          requires:
+            - rbMap_28
+      - depoly:
+          requires:
+            - home_provider_valid
+      - SLOT_VERSION:
+          requires:
+            - home_provider_valid
+      - isBottom:
+          requires:
+            - SLOT_VERSION
+      - preview:
+          requires:
+            - isBottom
+      - sys_ReceiveWake:
+          requires:
+            - isBottom
+      - lang-eu:
+          requires:
+            - sys_ReceiveWake
+      - push-it:
+          requires:
+            - lang-eu
+      - nonce-50wh:
+          requires:
+            - lang-eu
+      - THT2D:
+          requires:
+            - nonce-50wh
+      - spin-up:
+          requires:
+            - THT2D
+      - armor-8:
+          requires:
+            - THT2D
+      - content_shell_file:
+          requires:
+            - armor-8
+      - wip-webhook:
+          requires:
+            - content_shell_file
+      - MustPayment
+      - lishbealglossx:
+          requires:
+            - MustPayment
+      - APP-865:
+          requires:
+            - lishbealglossx
+      - py-ubuntu:
+          requires:
+            - lishbealglossx
+      - nuter:
+          requires:
+            - py-ubuntu
+      - verify-production-docker-image:
+          requires:
+            - nuter
+      - rmse:
+          requires:
+            - nuter
+      - luempyyrkcloa_zoux:
+          requires:
+            - rmse
+      - blast-off:
+          requires:
+            - luempyyrkcloa_zoux
+      - migration_retry:
+          requires:
+            - luempyyrkcloa_zoux
+      - cnv-index:
+          requires:
+            - migration_retry
+      - DATA-937:
+          requires:
+            - cnv-index
+      - noodleish:
+          requires:
+            - cnv-index
+      - jigsaw-tiger:
+          requires:
+            - noodleish
+      - phoenix-final:
+          requires:
+            - jigsaw-tiger
+      - abortPairLen:
+          requires:
+            - jigsaw-tiger
+      - L_payment:
+          requires:
+            - abortPairLen
+      - q1-release:
+          requires:
+            - L_payment
